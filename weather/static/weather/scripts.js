@@ -140,3 +140,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("city-input");
+
+    // Сохраняем город при отправке формы
+    const form = document.querySelector("form");
+    if (form) {
+        form.addEventListener("submit", () => {
+            const city = input.value.trim();
+            if (city) {
+                localStorage.setItem("lastCity", city);
+            }
+        });
+    }
+
+    // Если город не указан в URL, предложим открыть сохранённый
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has("city")) {
+        const lastCity = localStorage.getItem("lastCity");
+        if (lastCity) {
+            setTimeout(() => {
+                if (confirm(`Показать погоду в последнем просмотренном городе: "${lastCity}"?`)) {
+                    window.location.href = `/?city=${encodeURIComponent(lastCity)}`;
+                }
+            }, 500); // небольшая задержка для UX
+        }
+    }
+});
+
+document.querySelectorAll('.last-city-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const cityInput = document.getElementById('city-input');
+        cityInput.value = button.textContent;
+        cityInput.form.submit();
+    });
+});

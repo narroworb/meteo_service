@@ -3,6 +3,8 @@ from weather.services.weather_context import WeatherContext
 from weather.strategies.open_meteo import APIOpenMeteo
 from weather.strategies.open_meteo_geo import APIOpenMeteoGeo
 from django.http import JsonResponse
+from .models import CitySearch
+from django.contrib.auth.decorators import login_required
 
 geocoding_strategy = APIOpenMeteoGeo()
 weather_strategy = APIOpenMeteo()
@@ -31,23 +33,25 @@ def index(request):
                 "temperatures": fut_weather_data['temperature_2m'],
                 "icons": [get_icon_name(code) for code in fut_weather_data["weather_code"]]
             }
+            
+            user = request.user if request.user.is_authenticated else None
+            CitySearch.objects.create(user=user, city_name=city)
 
-
-    print(fut_weather_data)
+    user = request.user if request.user.is_authenticated else None
+    last_cities = CitySearch.objects.filter(user=user).values('city_name').distinct()[:5]
 
     return render(request, "weather/index.html", {
         "weather": cur_weather_data,
         "error": error,
         "city": city,
-        "weather_forecast": weather_forecast
+        "weather_forecast": weather_forecast,
+        "last_cities": last_cities
     })
 
 def autocomplete_city(request):
     query = request.GET.get("q", "")
 
     results = context.autocomplete(query)
-
-    print(results)
 
     return JsonResponse({"results": results})
 

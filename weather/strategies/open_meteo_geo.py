@@ -9,7 +9,6 @@ class APIOpenMeteoGeo(APIGeocoding):
             code = city[city.index("|")+1:]
             city = city[:city.index("|")] 
             api_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}&country={code}&language=ru&count=1"
-        print(api_url)
         api_resp = requests.get(api_url)
         data = api_resp.json()
 
