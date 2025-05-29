@@ -155,18 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Если город не указан в URL, предложим открыть сохранённый
-    const params = new URLSearchParams(window.location.search);
-    if (!params.has("city")) {
-        const lastCity = localStorage.getItem("lastCity");
-        if (lastCity) {
-            setTimeout(() => {
-                if (confirm(`Показать погоду в последнем просмотренном городе: "${lastCity}"?`)) {
-                    window.location.href = `/?city=${encodeURIComponent(lastCity)}`;
-                }
-            }, 500); // небольшая задержка для UX
-        }
-    }
 });
 
 document.querySelectorAll('.last-city-btn').forEach(button => {

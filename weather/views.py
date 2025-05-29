@@ -5,13 +5,15 @@ from weather.strategies.open_meteo_geo import APIOpenMeteoGeo
 from django.http import JsonResponse
 from .models import CitySearch
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
 
 geocoding_strategy = APIOpenMeteoGeo()
 weather_strategy = APIOpenMeteo()
         
 context = WeatherContext(weather_strategy, geocoding_strategy)
 
-
+@login_required(login_url='login')
 def index(request):
     cur_weather_data = None
     fut_weather_data = None
@@ -69,3 +71,14 @@ def get_icon_name(weathercode):
         return 'hail.png'
     else:
         return 'night.png'
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'weather/register.html', {'form': form})
