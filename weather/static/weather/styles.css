@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+    background-color: #f0f2f5;
+    margin: 0;
+}
+
+.form-container {
+    position: relative;
+    max-width: 700px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+/* Обертка для поля и кнопки */
+.input-button-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Автодополнение занимает почти всю ширину */
+.autocomplete-wrapper {
+    position: relative;
+    flex-grow: 1;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline-offset: 2px;
+    transition: border-color 0.3s ease;
+    height: 42px;
+}
+
+input[type="text"]:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
+
+/* Кнопка справа */
+button[type="submit"] {
+    background: linear-gradient(135deg, #4a90e2, #007BFF);
+    border: none;
+    cursor: pointer;
+    height: 42px;
+    width: 42px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    box-shadow: 0 6px 15px rgba(0, 86, 179, 0.5);
+}
+
+button[type="submit"]:active {
+    background: linear-gradient(135deg, #0056b3, #003d7a);
+    box-shadow: none;
+}
+
+button[type="submit"] svg {
+    fill: white;
+    width: 20px;
+    height: 20px;
+}
+
+/* Список автодополнения */
+#suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#suggestions li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+#suggestions li:hover,
+#suggestions li.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Блок погоды */
+.weather-block {
+    margin-top: 2rem;
+    padding: 1rem 1.5rem;
+    background: #e9f5ff;
+    border-radius: 6px;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
+}
+
+.error-message {
+    color: #d9534f;
+    background: #f8d7da;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    box-shadow: 0 4px 10px rgba(217, 83, 79, 0.1);
+}
