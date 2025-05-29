@@ -7,10 +7,11 @@ body {
 
 .form-container {
     position: relative;
-    max-width: 700px;
+    width: 90%;          
+    max-width: 1500px;   
     margin: 2rem auto;
     background: white;
-    padding: 2rem;
+    padding: 2rem 3rem;
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }

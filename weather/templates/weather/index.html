@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <title>Прогноз погоды</title>
     <link rel="stylesheet" href="{% static 'weather/styles.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="form-container">
@@ -35,10 +36,20 @@
         {% if weather %}
         <div class="weather-block">
             <h2>Погода в {{ city }}</h2>
-            <p>Температура: {{ weather.temperature }}°C</p>
-            <p>Погода: {{ weather.weathercode|default:'—' }}</p>
-            <p>Ветер: {{ weather.windspeed }} м/с</p>
+            <p>Температура воздуха: {{ weather.temperature }}°C</p>
+            <p>Текущие погодные условия: {{ weather.weathercode|default:'—' }}</p>
+            <p>Скорость ветра: {{ weather.windspeed }} км/ч</p>
         </div>
+
+        {% if weather_forecast %}
+            {{ weather_forecast.dates|json_script:"dates-data" }}
+            {{ weather_forecast.temperatures|json_script:"temps-data" }}
+            {{ weather_forecast.icons|json_script:"icons-data" }}
+        {% endif %}
+
+        <h2>Прогноз на 7 дней</h2>
+        <canvas id="tempChart" style="max-width: 100%; height: 400px; margin-top: 2rem;"></canvas>
+
         {% elif error %}
         <div class="weather-block error-message">
             {{ error }}
