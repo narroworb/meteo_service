@@ -7,6 +7,7 @@ from .models import CitySearch
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.db.models import Count
 
 geocoding_strategy = APIOpenMeteoGeo()
 weather_strategy = APIOpenMeteo()
@@ -82,3 +83,15 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'weather/register.html', {'form': form})
+
+
+@login_required
+def user_search_stats(request):
+    stats = (
+        CitySearch.objects
+        .filter(user=request.user)
+        .values('city_name')
+        .annotate(count=Count('id'))
+        .order_by('-count')
+    )
+    return render(request, 'weather/user_search_stats.html', {'stats': stats})

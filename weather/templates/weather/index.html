@@ -31,7 +31,7 @@
                                 d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L14.293 7.5H6.5a.5.5 0 0 0 0 1h7.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                         </svg>
                     </button>
-                </form>
+                </form>    
             </div>
         {% else %}
             <div class="d-inline-block text-end">
@@ -75,6 +75,7 @@
                 {% empty %}
                     <p class="text-muted">История пуста</p>
                 {% endfor %}
+                <a href="{% url 'user_search_stats' %}" class="btn btn-primary btn-sm m-1">Все мои запросы</a>
             </div>
         {% endif %}
 
